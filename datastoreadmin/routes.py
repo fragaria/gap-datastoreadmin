@@ -1,0 +1,7 @@
+routes = (
+    ('/', 'datastoreadmin.views.index'),
+)
+
+
+
+

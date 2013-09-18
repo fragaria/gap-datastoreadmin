@@ -1,0 +1,12 @@
+body {
+  padding-top: 50px;
+}
+
+.base-container {
+  padding: 40px 15px;
+}
+
+#list .list-title {
+    margin-top: 0;
+    margin-bottom: 1em;
+}

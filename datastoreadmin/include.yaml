@@ -1,0 +1,3 @@
+handlers:
+- url: /static/datastoreadmin
+  static_dir: lib/datastoreadmin/static
