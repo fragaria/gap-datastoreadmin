@@ -1,0 +1,78 @@
+HOST: http://www.google.com/
+
+--- Sample API v2 ---
+---
+Welcome to the our sample API documentation. All comments can be written in (support [Markdown](http://daringfireball.net/projects/markdown/syntax) syntax)
+---
+
+--- Get list of all entites available in admin ---
+GET /resources
+< 200
+< Content-Type: application/json
+[{"model": "ExampleModel", "resource": "example-model"}]
+
+--- Get list of all records for given entity kind ---
+GET /resources/example-model
+< 200
+< Content-Type: application/json
+{"count": 4, "model": "ExampleModel", "objects": [{"id": 5066549580791808, "now": 1379084599000, "method": "import_all", "lastChangeId": 23}, {"id": 5629499534213120, "now": null, "method": "import_all", "lastChangeId": 10}, {"id": 5910974510923776, "now": 1379078469000, "method": "import_all", "lastChangeId": 11}, {"id": 6192449487634432, "now": null, "method": "import_all", "lastChangeId": 11}]}
+
+--- Get list of all records for given entity kind ordered by `lastChangeId` ---
+GET /resources/example-model/?_o=lastChangeId
+< 200
+< Content-Type: application/json
+{"count": 3, "model": "ExampleModel", "objects": [{"id": 5910974510923776, "now": 1379078469000, "method": "import_all", "lastChangeId": 11}, {"id": 6192449487634432, "now": null, "method": "import_all", "lastChangeId": 11}, {"id": 5066549580791808, "now": 1379084599000, "method": "import_all", "lastChangeId": 23}]}
+
+--- Get list of all records for given entity kind ordered by `lastChangeId` and then by `now` ---
+GET /resources/example-model/?_o=lastChangeId,now
+< 200
+< Content-Type: application/json
+{"count": 2, "model": "ExampleModel", "objects": [{"id": 5910974510923776, "now": 1379078469000, "method": "import_all", "lastChangeId": 11}, {"id": 5066549580791808, "now": 1380285697000, "method": "import_all", "lastChangeId": 20}]}
+
+--- Get list of all records for given entity kind where lastChangeId is equal to 22 ---
+GET /resources/example-model?lastChangeId=22
+< 200
+< Content-Type: application/json
+{"count": 0, "model": "ExampleModel", "objects": []}
+
+--- Get list of all records for given entity kind where lastChangeId is equal to 20 ---
+GET /resources/example-model?lastChangeId=20
+< 200
+< Content-Type: application/json
+{"count": 1, "model": "ExampleModel", "objects": [{"id": 5066549580791808, "now": 1380285697000, "method": "import_all", "lastChangeId": 20}]}
+
+--- Get details about ExampleModel with id 5066549580791808 ---
+GET /resources/example-model/5066549580791808
+< 200
+< Content-Type: application/json
+{"id": 5066549580791808, "model": "ExampleModel", "now": 1379084599000, "method": "import_all", "lastChangeId": 23}
+
+--- Update resource with id 5066549580791808, set lastChangeId to 20 ---
+POST /resources/example-model/5066549580791808
+> Content-Type: application/json
+{"lastChangeId": 20}
+< 200
+< Content-Type: application/json
+{"id": 5066549580791808, "model": "ExampleModel", "now": 1379084599000, "method": "import_all", "lastChangeId": 20}
+
+--- Update resource with id 5066549580791808, multiple updates ---
+POST /resources/example-model/5066549580791808
+> Content-Type: application/json
+{"lastChangeId": 20, "method": "import_none"}
+< 200
+< Content-Type: application/json
+{"id": 5066549580791808, "model": "ExampleModel", "now": 1379084599000, "method": "import_none", "lastChangeId": 20}
+
+--- Delete resource with id 5066549580791808 ---
+DELETE /resources/example-model/5066549580791808
+> Content-Type: application/json
+< 204
+
+
+--- Create new resource ---
+POST /resources/example-model
+> Content-Type: application/json
+{"lastChangeId": 1000, "method": "import_none"}
+< 200
+< Content-Type: application/json
+{"id": 5066549580791999, "model": "ExampleModel", "now": 1379084599000, "method": "import_none", "lastChangeId": 1000}
